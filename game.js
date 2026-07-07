@@ -49,58 +49,42 @@ function DecideOutcome(humanChoice, computerChoice) {
   return "tie";
 }
 
-const PlayRound = (humanChoice) => {
+const PlayRound = (humanChoice, resultsTextElem) => {
   gamesPlayed++;
   //let humanChoice = getHumanChoice();
   let computerChoice = getComputerChoice();
 
-  //alert(`Computer Chooses: ${computerChoice}`);
+  alert(`Computer Chooses: ${computerChoice}`);
   console.log(humanChoice);
+
+  let results;
+
   switch (DecideOutcome(humanChoice, computerChoice)) {
     case "tie":
       humanScore++;
       computerScore++;
-      //alert(`It is a Tie: Human: ${humanScore} || Computer: ${computerScore}`);
+      results = `It is a Tie: Human: ${humanScore} || Computer: ${computerScore}`;
       break;
     case "human":
       humanScore++;
-      //alert(`Human Wins! Human: ${humanScore} || Computer: ${computerScore}`);
+      results = `Human Wins! Human: ${humanScore} || Computer: ${computerScore}`;
       break;
     case "computer":
       computerScore++;
-      //alert(`Computer Wins! Human: ${humanScore} || Computer: ${computerScore}`);
+      results = `Computer Wins! Human: ${humanScore} || Computer: ${computerScore}`;
       break;
   }
+  resultsTextElem.textContent = results
 }
 
-function PlayGame() {
-  // if (gamesPlayed >= 5) {
-  //   if (humanScore === computerScore) {
-  //     alert(`Wow, It is a tie! ${humanScore} || Computer: ${computerScore}`);
-  //   } 
-  //   else {
-  //     switch (humanScore > computerScore) {
-  //       case true:
-  //         alert(`Congratulations, You win the game!!!! ${humanScore} || Computer: ${computerScore}`);
-  //         break;
-  //       case false:
-  //         alert(`Damn, You lost the game! Better luck next time Human ${humanScore} || Computer: ${computerScore}`);
-  //         break;
-  //     }
-  //   }
-  //   humanScore = 0;
-  //   computerScore = 0;
-  //   gamesPlayed = 0;
-  // }
-  // PlayRound()
+(() => {
   const playerChoices = document.querySelectorAll("#player-choice > button");
-  // console.log(playerChoices.values);
-  playerChoices.forEach((elem) => {
-    elem.addEventListener("click", (event) => {
-      PlayRound(event.target.value)
+  const resultTextElem = document.getElementById("results");
+
+  playerChoices.forEach((btn) => {
+    btn.addEventListener("click", (btn) => {
+      PlayRound(btn.target.value, resultTextElem)
     })
   });
-  
-}
 
-PlayGame();
+})();
