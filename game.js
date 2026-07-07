@@ -23,7 +23,7 @@ const getHumanChoice = () =>
   prompt("Choose One: rock || paper || scissors", "rock").toLowerCase();
 
 function DecideOutcome(humanChoice, computerChoice) {
-
+  
   if (humanChoice === "rock") {
     switch (computerChoice) {
       case "paper":
@@ -54,37 +54,36 @@ const PlayRound = (humanChoice, resultsTextElem) => {
   //let humanChoice = getHumanChoice();
   let computerChoice = getComputerChoice();
 
-  alert(`Computer Chooses: ${computerChoice}`);
   console.log(humanChoice);
 
   let results;
 
-  switch (DecideOutcome(humanChoice, computerChoice)) {
+  let outcome = DecideOutcome(humanChoice, computerChoice);
+  console.log(outcome);
+
+  switch (outcome) {
     case "tie":
       humanScore++;
       computerScore++;
-      results = `It is a Tie: Human: ${humanScore} || Computer: ${computerScore}`;
+      results = `It is a Tie:\n\n\nHuman Score: ${humanScore}\nComputer Score: ${computerScore}`;
       break;
     case "human":
       humanScore++;
-      results = `Human Wins! Human: ${humanScore} || Computer: ${computerScore}`;
+      results = `Human Wins!\nHuman Score: ${humanScore}\nComputer Score: ${computerScore}`;
       break;
     case "computer":
       computerScore++;
-      results = `Computer Wins! Human: ${humanScore} || Computer: ${computerScore}`;
+      results = `Computer Wins!\n\n\nHuman Score: ${humanScore}\nComputer Score: ${computerScore}`;
       break;
   }
-  resultsTextElem.textContent = results
+  resultsTextElem.textContent = `Human Chooses: ${humanChoice}\nComputer Chooses: ${computerChoice}\n\n\n${results}`;
 }
 
-(() => {
-  const playerChoices = document.querySelectorAll("#player-choice > button");
-  const resultTextElem = document.getElementById("results");
+const playerChoices = document.querySelectorAll("#player-choice > button");
+const resultTextElem = document.getElementById("results");
 
-  playerChoices.forEach((btn) => {
-    btn.addEventListener("click", (btn) => {
-      PlayRound(btn.target.value, resultTextElem)
-    })
-  });
-
-})();
+playerChoices.forEach((btn) => {
+  btn.addEventListener("click", (btn) => {
+    PlayRound(btn.target.value, resultTextElem)
+  })
+});
