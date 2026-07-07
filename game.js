@@ -50,6 +50,7 @@ function DecideOutcome(humanChoice, computerChoice) {
 }
 
 const PlayRound = (humanChoice, resultsTextElem) => {
+
   gamesPlayed++;
   //let humanChoice = getHumanChoice();
   let computerChoice = getComputerChoice();
@@ -69,14 +70,22 @@ const PlayRound = (humanChoice, resultsTextElem) => {
       break;
     case "human":
       humanScore++;
-      results = `Human Wins!\nHuman Score: ${humanScore}\nComputer Score: ${computerScore}`;
+      results = `Human Wins!\n\n\nHuman Score: ${humanScore}\nComputer Score: ${computerScore}`;
       break;
     case "computer":
       computerScore++;
       results = `Computer Wins!\n\n\nHuman Score: ${humanScore}\nComputer Score: ${computerScore}`;
       break;
   }
-  resultsTextElem.textContent = `Human Chooses: ${humanChoice}\nComputer Chooses: ${computerChoice}\n\n\n${results}`;
+  if(gamesPlayed === 5){
+    resultTextElem.textContent = (humanScore > computerScore ? "Congratulations! You Win" : "Damn! You Lost!") + `\n\n\nHuman Score: ${humanScore}\nComputer Score: ${computerScore}`;
+    humanScore = 0;
+    computerScore = 0;
+    gamesPlayed = 0;
+  }else{
+    resultsTextElem.textContent = `Human Chooses: ${humanChoice}\nComputer Chooses: ${computerChoice}\n\n\n${results}`;
+  }
+  
 }
 
 const playerChoices = document.querySelectorAll("#player-choice > button");
